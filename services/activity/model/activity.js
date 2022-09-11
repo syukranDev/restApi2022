@@ -24,6 +24,29 @@ module.exports = class test {
         });
     });
   }
+
+  activityFilter(req){ 
+    return new Promise((resolve, reject) => {
+      return sql.activityFilter(req)
+        .then(results => {
+          logger.info({
+            path: 'activityFilter',
+            data: results
+          });  
+          return resolve(results);
+        })
+        .catch(reason => {
+          logger.error({
+            path: 'activityFilter catch',
+            info: 'activityFilter failed',
+            reason: reason
+          })
+          return reject(reason);
+        });
+    });
+  }
+
+  
 }
 
 

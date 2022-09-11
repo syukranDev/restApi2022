@@ -1,6 +1,5 @@
-function prepareResponse(status, code, text, data){
+function prepareResponse(code, text, data){
 	return({
-		statusCode: status,
 		code: code,
 		text: text,
 		data: data

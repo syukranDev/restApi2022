@@ -8,7 +8,17 @@ var activity = new Activity();
 const activityListCtrl = (arg) => {
   return new Promise(async (resolve, reject) => {
 	activity.activityList(arg).then(async function(data){
-		return resolve(utils.prepareResponse('MH000', 200, "success", data));
+		return resolve(utils.prepareResponse(200, "success", data));
+  	}).catch(function(catch_error){
+		return reject(catch_error);
+  	});
+  });
+}
+
+const activitFilterCtrl = (arg) => {
+  return new Promise(async (resolve, reject) => {
+	activity.activityFilter(arg).then(async function(data){
+		return resolve(utils.prepareResponse(200, "success", data));
   	}).catch(function(catch_error){
 		return reject(catch_error);
   	});
@@ -30,6 +40,23 @@ module.exports.list = function list(req, res) {
 	})
 	.catch(reason => {
 		printEndLogs(start_benchmark, 'activityListCtrl', reason, 'END - activityListCtrl with error');
+		return res.status(reason.statusCode).send(reason);
+	})
+};
+module.exports.filter = function filter(req, res) {
+	let start_benchmark = process.hrtime();
+	logger.info({
+		route: 'activityFilterCtrl',
+		body: req.body,
+		info: 'START - activityFilterCtrl'
+	});
+	return activitFilterCtrl(req)
+	.then(function(results) {
+		printEndLogs(start_benchmark, 'activityFilterCtrl', results, 'END - activityFilterCtrl with success');
+		return res.send(results);
+	})
+	.catch(reason => {
+		printEndLogs(start_benchmark, 'activityFilterCtrl', reason, 'END - activityFilterCtrl with error');
 		return res.status(reason.statusCode).send(reason);
 	})
 };
