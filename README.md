@@ -1,5 +1,10 @@
 # restApi2022
 
+npm i 
+cd /services/activity
+set NODE_ENV=dev
+node index.js
+
 Addition: <br>
 -winston for logger <br>
 -joi for validation post req body <br>
