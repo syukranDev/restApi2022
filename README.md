@@ -1,9 +1,9 @@
 # restApi2022
 
-npm i 
-cd /services/activity
-set NODE_ENV=dev
-node index.js
+npm i  <br>
+cd /services/activity  <br>
+set NODE_ENV=dev <br>
+node index.js <br>
 
 Addition: <br>
 -winston for logger <br>
