@@ -8,6 +8,7 @@ const validation = require('./components/validation')
 var controller = require('./model/controller')
 
 app.use(function (request, response, next) {
+    //for gateway
     // response.header("Access-Control-Allow-Origin", config.ACCESS_CONTROL_ALLOW_ORIGIN);
     // response.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     // response.header("Access-Control-Allow-Headers", "Authorization, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");

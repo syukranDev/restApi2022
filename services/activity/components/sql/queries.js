@@ -6,11 +6,13 @@ var activityList = (arg) => {
         try{
             const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts')
             const { data: comments } = await axios.get('https://jsonplaceholder.typicode.com/comments')
+            //posts - post_id
+            //comments - postID
 
             let postWithCommentCount = []
         
-            if (posts && comments) {
-                if (posts.length>0){
+            if (posts && comments) { // if exist
+                if (posts.length>0){ // if exist
                     for (const post of posts) {
                         let newRecord = {
                         post_id: post.id || null,
@@ -19,7 +21,7 @@ var activityList = (arg) => {
                         total_number_of_comments: 0
                         }
 
-                        if (comments.length>0){
+                        if (comments.length>0){ // if exist
                             for (const comment of comments) {
                                 if (comment.postId === newRecord.post_id) {
                                     newRecord.total_number_of_comments += 1
@@ -30,11 +32,9 @@ var activityList = (arg) => {
                     }
                 }
             }
-
-            postWithCommentCount.sort((x, y) => {
-                return x.total_number_of_comments < y.total_number_of_comments ? 1 : -1
-            })
-            resolve(postWithCommentCount) 
+            var sorted = postWithCommentCount.sort(function(a, b) {return b.total_number_of_comments - a.total_number_of_comments});
+            // if asc : a-b // if desc : b-a
+            resolve(sorted) 
         } catch (err) {
             reject({
                 statusCode: 500,

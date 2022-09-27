@@ -7,8 +7,8 @@ const filterValidationSchema = Joi.object({
 });
 
 module.exports.filterSchema = function filterSchema(req, res, next) {
-    const isValid = filterValidationSchema.validate(req.body);
-    return validateSchema(req, res, next, isValid, 'filterSchema')
+    const isValid = filterValidationSchema.validate(req.body); // validation post body
+    return validateSchema(req, res, next, isValid, 'filterSchema') // for logs
 }
 
 const validateSchema = function validateSchema(req, res, next, isValid, schema_name) {
