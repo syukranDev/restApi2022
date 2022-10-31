@@ -61,6 +61,52 @@ var activityFilter = (arg) => {
     })
 }
 
+var statisticFilter = (arg) => {
+    return promise = new Promise(async (resolve, reject) => {
+        try {
+            var { data: records } = await axios.get('https://bitbucket.org/!api/2.0/snippets/tawkto/aA8zqE/4f62624a75da6d1b8dd7f70e53af8d36a1603910/files/webstats.json')
+
+            //If startDate && endDate are declared in POST
+            if (arg.body.startDate && arg.body.endDate) {
+                var start = new Date(arg.body.startDate)
+                var end = new Date(arg.body.endDate)
+
+                var resultData = records.filter(a => {
+                    var dateNew = new Date(a.date);
+                    return (dateNew >= start && dateNew <= end);
+                })
+                var records = resultData
+            }
+
+            //If startDate && endDate are NOT declared in POST
+            var result = records.reduce(function (newRecords, obj) {
+                var objForId = newRecords.filter(function (idObj) { return idObj.websiteId === obj.websiteId})[0]
+                
+                if (objForId) {
+                    objForId.chats += obj.chats;
+                    objForId.missedChats += obj.missedChats;
+                } else {
+                    newRecords.push({
+                        websiteId: obj.websiteId,
+                        chats: obj.chats,
+                        missedChats: obj.missedChats
+                  })
+                }
+              
+                return newRecords;
+              }, [])
+
+            resolve(result)
+
+        } catch(err){
+            reject({
+                statusCode: 500,
+                message: 'System Error'
+            })
+        }
+    })
+}
+
 //2nd method for list top posts/comments, need to debug 
 // var activityList = (arg) => {
 //     return promise = new Promise((resolve, reject) => {
@@ -107,5 +153,6 @@ var activityFilter = (arg) => {
 
 module.exports = {
     activityList :  activityList,
-    activityFilter : activityFilter
+    activityFilter : activityFilter,
+    statisticFilter : statisticFilter
 }

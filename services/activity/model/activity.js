@@ -46,6 +46,27 @@ module.exports = class test {
     });
   }
 
+  statisticFilter(req){ 
+    return new Promise((resolve, reject) => {
+      return sql.statisticFilter(req)
+        .then(results => {
+          logger.info({
+            path: 'statisticFilter',
+            data: results
+          });  
+          return resolve(results);
+        })
+        .catch(reason => {
+          logger.error({
+            path: 'statisticFilter catch',
+            info: 'statisticFilter failed',
+            reason: reason
+          })
+          return reject(reason);
+        });
+    });
+  }
+
   
 }
 

@@ -25,6 +25,16 @@ const activitFilterCtrl = (arg) => {
   });
 }
 
+const statisticCtrl = (arg) => {
+  return new Promise(async (resolve, reject) => {
+	activity.statisticFilter(arg).then(async function(data){
+		return resolve(utils.prepareResponse(200, "success", data));
+  	}).catch(function(catch_error){
+		return reject(catch_error);
+  	});
+  });
+}
+
 
 module.exports.list = function list(req, res) {
 	let start_benchmark = process.hrtime();
@@ -43,6 +53,7 @@ module.exports.list = function list(req, res) {
 		return res.status(reason.statusCode).send(reason);
 	})
 };
+
 module.exports.filter = function filter(req, res) {
 	let start_benchmark = process.hrtime();
 	logger.info({
@@ -57,6 +68,24 @@ module.exports.filter = function filter(req, res) {
 	})
 	.catch(reason => {
 		printEndLogs(start_benchmark, 'activityFilterCtrl', reason, 'END - activityFilterCtrl with error');
+		return res.status(reason.statusCode).send(reason);
+	})
+};
+
+module.exports.statistic = function statistic(req, res) {
+	let start_benchmark = process.hrtime();
+	logger.info({
+		route: 'statisticCtrl',
+		body: req.body,
+		info: 'START - statisticCtrl'
+	});
+	return statisticCtrl(req)
+	.then(function(results) {
+		printEndLogs(start_benchmark, 'statisticCtrl', results, 'END - statisticCtrl with success');
+		return res.send(results);
+	})
+	.catch(reason => {
+		printEndLogs(start_benchmark, 'statisticCtrl', reason, 'END - statisticCtrl with error');
 		return res.status(reason.statusCode).send(reason);
 	})
 };

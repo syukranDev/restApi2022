@@ -36,6 +36,9 @@ router.route('/list')
 router.route('/filter')
 .post((...args) => validation.filterSchema(...args), (...args) => controller.filter(...args))
 
+router.route('/statistic')
+.post((...args) => controller.statistic(...args))
+
 
 
 module.exports = app
