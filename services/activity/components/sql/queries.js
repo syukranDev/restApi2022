@@ -66,19 +66,20 @@ var statisticFilter = (arg) => {
         try {
             var { data: records } = await axios.get('https://bitbucket.org/!api/2.0/snippets/tawkto/aA8zqE/4f62624a75da6d1b8dd7f70e53af8d36a1603910/files/webstats.json')
 
-            //If startDate && endDate are declared in POST
-            if (arg.body.startDate && arg.body.endDate) {
+            //If startDate || endDate are declared in POST body
+            if (arg.body.startDate || arg.body.endDate) {
                 var start = new Date(arg.body.startDate)
                 var end = new Date(arg.body.endDate)
 
                 var resultData = records.filter(a => {
                     var dateNew = new Date(a.date);
-                    return (dateNew >= start && dateNew <= end);
+                    if (arg.body.startDate && !arg.body.endDate) { return (dateNew >= start) } 
+                    if (arg.body.startDate && arg.body.endDate) { return (dateNew >= start && dateNew <= end) }
                 })
                 var records = resultData
             }
 
-            //If startDate && endDate are NOT declared in POST
+            //If startDate || endDate are NOT declared in POST body
             var result = records.reduce((newRecords, obj) => {
                 var objForId = newRecords.filter((idObj) => { return idObj.websiteId === obj.websiteId})[0]
                 
