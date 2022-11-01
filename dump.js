@@ -50,4 +50,3 @@ const noDate= {}
 statisticFilter(partialDates)
 // statisticFilter(noDate)
 
-git

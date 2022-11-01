@@ -1,5 +1,13 @@
 # restApi2022
 
+For APIs testing, kindly ignore these: <br>
+GET: /app/portal/activity/list <br>
+POST: /app/portal/activity/filter <br>
+
+For take-home test: <br>
+POST: /app/portal/activity/statistic <br>
+
+
 npm i  <br>
 cd /services/activity  <br>
 set NODE_ENV=dev <br>
