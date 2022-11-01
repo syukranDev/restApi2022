@@ -79,8 +79,8 @@ var statisticFilter = (arg) => {
             }
 
             //If startDate && endDate are NOT declared in POST
-            var result = records.reduce(function (newRecords, obj) {
-                var objForId = newRecords.filter(function (idObj) { return idObj.websiteId === obj.websiteId})[0]
+            var result = records.reduce((newRecords, obj) => {
+                var objForId = newRecords.filter((idObj) => { return idObj.websiteId === obj.websiteId})[0]
                 
                 if (objForId) {
                     objForId.chats += obj.chats;
