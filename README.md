@@ -4,7 +4,7 @@ For APIs testing, kindly ignore these: <br>
 GET: /app/portal/activity/list <br>
 POST: /app/portal/activity/filter <br>
 
-For take-home test: <br>
+Dump api: <br>
 POST: /app/portal/activity/statistic <br>
 
 
